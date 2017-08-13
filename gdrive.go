@@ -64,6 +64,11 @@ func main() {
 			Description: "Print list entries separated by provided character",
 			DefaultValue: DefaultSeparator,
 		},
+		cli.StringFlag{
+			Name:        "serviceAccountSubject",
+			Patterns:    []string{"--service-account-subject"},
+			Description: "Connect to this user account GDrive instead of the service account GDrive. Useful only with the --service-account parameter. The service account must be domain-wide delegated.",
+		},
 	}
 
 	handlers := []*cli.Handler{

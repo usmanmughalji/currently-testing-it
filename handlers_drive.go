@@ -379,7 +379,7 @@ func getOauthClient(args cli.Arguments) (*http.Client, error) {
 
 	if args.String("serviceAccount") != "" {
 		serviceAccountPath := ConfigFilePath(configDir, args.String("serviceAccount"))
-		serviceAccountClient, err := auth.NewServiceAccountClient(serviceAccountPath, oauth_context)
+		serviceAccountClient, err := auth.NewServiceAccountClient(serviceAccountPath, oauth_context, args.String("serviceAccountSubject"))
 		if err != nil {
 			return nil, err
 		}
