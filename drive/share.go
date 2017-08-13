@@ -2,6 +2,7 @@ package drive
 
 import (
 	"fmt"
+	"strings"
 	"google.golang.org/api/drive/v3"
 	"io"
 	"text/tabwriter"
@@ -15,21 +16,30 @@ type ShareArgs struct {
 	Email        string
 	Domain       string
 	Discoverable bool
+	DisableNotification bool
 }
 
 func (self *Drive) Share(args ShareArgs) error {
 	permission := &drive.Permission{
 		AllowFileDiscovery: args.Discoverable,
 		Role:               args.Role,
-		Type:               args.Type,
+		Type:               strings.ToLower(args.Type),
 		EmailAddress:       args.Email,
 		Domain:             args.Domain,
 	}
 
-	_, err := self.service.Permissions.Create(args.FileId, permission).SupportsTeamDrives(true).Do()
+	call := self.service.Permissions.Create(args.FileId, permission).SupportsTeamDrives(true)
 	
 	if permission.Role == "owner" {
 		call.TransferOwnership(true);
+	}
+	else
+	{
+		if permission.Type == "user" || permission.Type == "group" {
+			if args.DisableNotification {
+				call = call.SendNotificationEmail(false);
+			}
+		}
 	}
 	
 	_, err := call.Do()
