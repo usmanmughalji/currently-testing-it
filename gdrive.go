@@ -454,10 +454,9 @@ func main() {
 						OmitValue:   true,
 					},
 					cli.BoolFlag{
-						Name:        "disableNotification",
-						Patterns:    []string{"--no-notification"},
-						Description: "Disable notification e-mail when sharing to user or group. Cannot be disabled for ownership transfer.",
-						OmitValue:   true,
+						Name:        "notificationMessage",
+						Patterns:    []string{"--notification-message"},
+						Description: "A custom message to include in the notification email.",
 					},
 				),
 			},

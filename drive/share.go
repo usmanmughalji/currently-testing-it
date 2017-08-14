@@ -16,7 +16,7 @@ type ShareArgs struct {
 	Email        string
 	Domain       string
 	Discoverable bool
-	DisableNotification bool
+	NotificationMessage string
 }
 
 func (self *Drive) Share(args ShareArgs) error {
@@ -35,10 +35,8 @@ func (self *Drive) Share(args ShareArgs) error {
 	}
 	else
 	{
-		if permission.Type == "user" || permission.Type == "group" {
-			if args.DisableNotification {
-				call = call.SendNotificationEmail(false);
-			}
+		if args.NotificationMessage != "" {
+			call = call.EmailMessage(args.NotificationMessage);
 		}
 	}
 	
