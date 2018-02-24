@@ -66,7 +66,7 @@ func NewAccessTokenClient(clientId, clientSecret string, ctx context.Context, ac
 	)
 }
 
-func NewServiceAccountClient(serviceAccountFile string, serviceAccountSubject string) (*http.Client, error) {
+func NewServiceAccountClient(serviceAccountFile string, serviceAccountSubject string, ctx context.Context) (*http.Client, error) {
 	content, exists, err := ReadFile(serviceAccountFile)
 	if(!exists) {
 		return nil, fmt.Errorf("Service account filename %q not found", serviceAccountFile)
